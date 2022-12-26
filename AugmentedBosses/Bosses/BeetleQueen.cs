@@ -8,7 +8,7 @@ namespace AugmentedBosses
 {
   public class BeetleQueen
   {
-    private void RebuildAI()
+    public void ModifyAI()
     {
       GameObject gameObject = AugmentedBosses.beetleQueenMaster;
       foreach (Object component in (Component[])gameObject.GetComponents<AISkillDriver>())
@@ -87,14 +87,14 @@ namespace AugmentedBosses
       aiSkillDriver4.buttonPressType = (AISkillDriver.ButtonPressType)0;
     }
 
-    private void ModifyBeetles()
+    public void ModifyBeetles()
     {
       CharacterBody component = AugmentedBosses.beetleBody.GetComponent<CharacterBody>();
       component.baseMoveSpeed = 8f;
       component.baseAttackSpeed = 1.5f;
     }
 
-    private void ModifyProjectile()
+    public void ModifyProjectile()
     {
       ProjectileImpactExplosion component1 = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Beetle/BeetleQueenSpit.prefab").WaitForCompletion().GetComponent<ProjectileImpactExplosion>();
       ((ProjectileExplosion)component1).blastRadius = 6f;

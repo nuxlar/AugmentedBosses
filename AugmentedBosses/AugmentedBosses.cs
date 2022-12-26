@@ -41,6 +41,10 @@ namespace AugmentedBosses
     {
       On.RoR2.CharacterBody.RecalculateStats += RecalculateStats;
       On.EntityStates.BeetleQueenMonster.SummonEggs.SummonEgg += SummonEgg;
+      BeetleQueen beetleQueen = new();
+      beetleQueen.ModifyAI();
+      beetleQueen.ModifyBeetles();
+      beetleQueen.ModifyProjectile();
     }
 
     private void RecalculateStats(On.RoR2.CharacterBody.orig_RecalculateStats orig, CharacterBody self)
