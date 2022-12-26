@@ -5,17 +5,18 @@ fuck around and find out :)
 Gives bosses a "second phase" where if their HP drops below 50% they are immune for 10 seconds and HP stays at 50% (**MAYBE**Mini boss rush at the end of each stage. Removes tricorn.)
 
 - **Beetle Queen**
-  - Revival of Moffein's Beetle Queen Plus
+  - Revival of Moffein's [Beetle Queen Plus](https://thunderstore.io/package/Moffein/Beetle_Queen_Plus/)
 
+- **Wandering Vagrant**
+  - More movement speed/acceleration
+  - Has a tesla coil
+  - Tracking Bomb is faster
+  - Orbs are red now :)
+  
 - **Stone Titan**
   - Laser does 1/2 damage but it slows (mvmt AND attk spd?)
   - Fires laser bolts during laser
   - Tracking fist that changes pattern. Channeling ability that hits 3 times and gets more complex
-
-- **Wandering Vagrant**
-  - More movement speed
-  - Has a tesla coil
-  - Orbs: increased spawn frequency, change color like ror1
 
 - **Clay Dunestrider**
   - No Change
