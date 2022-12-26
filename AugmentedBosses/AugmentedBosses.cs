@@ -20,7 +20,6 @@ namespace AugmentedBosses
 
   public class AugmentedBosses : BaseUnityPlugin
   {
-
     public static GameObject beetleBody = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Beetle/BeetleBody.prefab").WaitForCompletion();
     public static GameObject beetleQueen = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Beetle/BeetleQueen2Body.prefab").WaitForCompletion();
     public static GameObject beetleQueenMaster = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Beetle/BeetleQueenMaster.prefab").WaitForCompletion();
@@ -36,15 +35,22 @@ namespace AugmentedBosses
     public static GameObject overloadingWorm = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/ElectricWorm/ElectricWormBody.prefab").WaitForCompletion();
     public static GameObject scavenger = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Scav/ScavBody.prefab").WaitForCompletion();
     public static GameObject devastator = Addressables.LoadAssetAsync<GameObject>("RoR2/DLC1/VoidMegaCrab/VoidMegaCrabBody.prefab").WaitForCompletion();
+    private static GameObject cannonGhost = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Vagrant/VagrantCannonGhost.prefab").WaitForCompletion();
+    private static Material cannonBlue = Addressables.LoadAssetAsync<Material>("RoR2/Base/Vagrant/matVagrantCannonBlue.mat").WaitForCompletion();
+    private static Material cannonGreen = Addressables.LoadAssetAsync<Material>("RoR2/Base/Vagrant/matVagrantCannonGreen.mat").WaitForCompletion();
+    private static Material cannonRed = Addressables.LoadAssetAsync<Material>("RoR2/Base/Vagrant/matVagrantCannonRed.mat").WaitForCompletion();
 
     public void Awake()
     {
+      // Beetle Queen
       On.RoR2.CharacterBody.RecalculateStats += RecalculateStats;
       On.EntityStates.BeetleQueenMonster.SummonEggs.SummonEgg += SummonEgg;
       BeetleQueen beetleQueen = new();
       beetleQueen.ModifyAI();
       beetleQueen.ModifyBeetles();
       beetleQueen.ModifyProjectile();
+      // Wandering Vagrant
+      cannonGhost.transform.GetChild(1).GetComponent<MeshRenderer>().material = cannonRed;
     }
 
     private void RecalculateStats(On.RoR2.CharacterBody.orig_RecalculateStats orig, CharacterBody self)

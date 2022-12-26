@@ -3,7 +3,7 @@
 Gives bosses a "second phase" where if their HP drops below 50% they are immune for 10 seconds and HP stays at 50% (**MAYBE**Mini boss rush at the end of each stage. Removes tricorn.)
 
 - **Beetle Queen**
-  - Revival of Moffein's Beetle Queen Plus and FMRadio11's Beetle Queen Buff
+  - Revival of Moffein's Beetle Queen Plus
 
 - **Stone Titan**
   - Laser does 1/2 damage but it slows (mvmt AND attk spd?)
