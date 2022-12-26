@@ -2,6 +2,7 @@ using BepInEx;
 using BepInEx.Configuration;
 using EntityStates;
 using EntityStates.BeetleQueenMonster;
+using EntityStates.VagrantMonster;
 using RoR2;
 using RoR2.CharacterAI;
 using RoR2.Skills;
@@ -11,6 +12,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.AddressableAssets;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -37,7 +39,6 @@ namespace AugmentedBosses
     public static GameObject devastator = Addressables.LoadAssetAsync<GameObject>("RoR2/DLC1/VoidMegaCrab/VoidMegaCrabBody.prefab").WaitForCompletion();
     private static GameObject cannonGhost = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Vagrant/VagrantCannonGhost.prefab").WaitForCompletion();
     private static Material cannonBlue = Addressables.LoadAssetAsync<Material>("RoR2/Base/Vagrant/matVagrantCannonBlue.mat").WaitForCompletion();
-    private static Material cannonGreen = Addressables.LoadAssetAsync<Material>("RoR2/Base/Vagrant/matVagrantCannonGreen.mat").WaitForCompletion();
     private static Material cannonRed = Addressables.LoadAssetAsync<Material>("RoR2/Base/Vagrant/matVagrantCannonRed.mat").WaitForCompletion();
 
     public void Awake()
@@ -50,7 +51,40 @@ namespace AugmentedBosses
       beetleQueen.ModifyBeetles();
       beetleQueen.ModifyProjectile();
       // Wandering Vagrant
+      CharacterMaster.onStartGlobal += MasterChanges;
+      On.RoR2.CharacterMaster.OnBodyStart += OnBodyStart;
+      On.EntityStates.VagrantMonster.FireTrackingBomb.FireBomb += VagrantFireBomb;
+      new WanderingVagrant().ModifyStats();
       cannonGhost.transform.GetChild(1).GetComponent<MeshRenderer>().material = cannonRed;
+    }
+
+    private void MasterChanges(CharacterMaster master)
+    {
+      if (master.name == "VagrantMaster(Clone)")
+        master.GetComponent<CharacterMaster>().GetComponents<AISkillDriver>().Where<AISkillDriver>(x => x.customName == "Chase").First<AISkillDriver>().minDistance = 25f;
+    }
+
+    private void OnBodyStart(On.RoR2.CharacterMaster.orig_OnBodyStart orig, RoR2.CharacterMaster self, CharacterBody body)
+    {
+      orig(self, body);
+      if (body.name == "VagrantBody(Clone)")
+        body.inventory.GiveItem(RoR2Content.Items.ShockNearby);
+    }
+
+    private void VagrantFireBomb(On.EntityStates.VagrantMonster.FireTrackingBomb.orig_FireBomb orig, FireTrackingBomb self)
+    {
+      Ray aimRay = self.GetAimRay();
+      Transform modelTransform = self.GetModelTransform();
+      if ((bool)modelTransform)
+      {
+        ChildLocator component = modelTransform.GetComponent<ChildLocator>();
+        if ((bool)component)
+          aimRay.origin = component.FindChild("TrackingBombMuzzle").transform.position;
+      }
+      EffectManager.SimpleMuzzleFlash(FireTrackingBomb.muzzleEffectPrefab, self.gameObject, "TrackingBombMuzzle", false);
+      if (!self.isAuthority)
+        return;
+      ProjectileManager.instance.FireProjectile(FireTrackingBomb.projectilePrefab, aimRay.origin, Util.QuaternionSafeLookRotation(aimRay.direction), self.gameObject, self.damageStat * FireTrackingBomb.bombDamageCoefficient, FireTrackingBomb.bombForce, Util.CheckRoll(self.critStat, self.characterBody.master), DamageColorIndex.Default, null, 20);
     }
 
     private void RecalculateStats(On.RoR2.CharacterBody.orig_RecalculateStats orig, CharacterBody self)
