@@ -1,6 +1,6 @@
 # Augmented Bosses
 
-Mini boss rush at the end of each stage. Removes tricorn. Gives bosses a "second phase" where if their HP drops below 50% they are immune for 10 seconds and HP stays at 50%
+Gives bosses a "second phase" where if their HP drops below 50% they are immune for 10 seconds and HP stays at 50% (**MAYBE**Mini boss rush at the end of each stage. Removes tricorn.)
 
 - **Beetle Queen**
   - Revival of Moffein's Beetle Queen Plus and FMRadio11's Beetle Queen Buff
@@ -8,12 +8,12 @@ Mini boss rush at the end of each stage. Removes tricorn. Gives bosses a "second
 - **Stone Titan**
   - Laser does 1/2 damage but it slows (mvmt AND attk spd?)
   - Fires laser bolts during laser
-  - Tracking fist that changes pattern.
+  - Tracking fist that changes pattern. Channeling ability that hits 3 times and gets more complex
 
 - **Wandering Vagrant**
   - More movement speed
   - Has a tesla coil
-  - Orbs: increased spawn frequency
+  - Orbs: increased spawn frequency, change color like ror1
 
 - **Clay Dunestrider**
   - No Change
@@ -52,6 +52,7 @@ Mini boss rush at the end of each stage. Removes tricorn. Gives bosses a "second
 
 - **Scavenger**
   - No Change
+
 ## Changelog
 
 **1.0.0**

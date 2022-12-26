@@ -1,12 +1,17 @@
 using BepInEx;
 using BepInEx.Configuration;
+using EntityStates;
+using EntityStates.BeetleQueenMonster;
 using RoR2;
 using RoR2.CharacterAI;
 using RoR2.Skills;
 using RoR2.Projectile;
 using EntityStates.NullifierMonster;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.AddressableAssets;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace AugmentedBosses
@@ -15,6 +20,10 @@ namespace AugmentedBosses
 
   public class AugmentedBosses : BaseUnityPlugin
   {
+
+    public static GameObject beetleBody = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Beetle/BeetleBody.prefab").WaitForCompletion();
+    public static GameObject beetleQueen = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Beetle/BeetleQueen2Body.prefab").WaitForCompletion();
+    public static GameObject beetleQueenMaster = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Beetle/BeetleQueenMaster.prefab").WaitForCompletion();
     public static GameObject titan = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Titan/TitanBody.prefab").WaitForCompletion();
     public static GameObject vagrant = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Vagrant/VagrantBody.prefab").WaitForCompletion();
     public static GameObject dunestrider = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/ClayBoss/ClayBossBody.prefab").WaitForCompletion();
@@ -28,22 +37,50 @@ namespace AugmentedBosses
     public static GameObject scavenger = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Scav/ScavBody.prefab").WaitForCompletion();
     public static GameObject devastator = Addressables.LoadAssetAsync<GameObject>("RoR2/DLC1/VoidMegaCrab/VoidMegaCrabBody.prefab").WaitForCompletion();
 
-    // Beetle Queen: deadlier poison zones, bug zones slow more?, summons only 2 BG
-    // Titan: bigger X fist, maybe zappies from Auri
-    // Wandering Vagrant: more movement, tesla coil-like attack?, change projectile trajectory
-    // Dunestrider: fuck this piece of shit
-    // Imp Overlord: throw sends out more shards, blitz is tracking, ult is faster and sends out shards?
-    // Magma Worm: Add magma orb or flamethrower attack
-    // Grovetender: tracking chains, faster wisps, summons greater wisps?
-    // Solus Control Unit: alloy worship unit but less shield?
-    // Xi Construct: i hate this fucking thing
-    // Grandparent: bring back the dead abilities PortalFist, PortalJump, SpiritPull, etc...
-    // Overloading Worm: Add Vagrant orb attack similar to P4 umbral wurm
-    // Scavenger:
-    // Void Devastator: 
     public void Awake()
     {
-      new AugmentedBeetleQueen().AugmentBeetleQueen();
+      On.RoR2.CharacterBody.RecalculateStats += RecalculateStats;
+      On.EntityStates.BeetleQueenMonster.SummonEggs.SummonEgg += SummonEgg;
+    }
+
+    private void RecalculateStats(On.RoR2.CharacterBody.orig_RecalculateStats orig, CharacterBody self)
+    {
+      orig.Invoke(self);
+      self.armor -= 5f * (float)self.GetBuffCount(RoR2Content.Buffs.BeetleJuice);
+    }
+
+    private void SummonEgg(On.EntityStates.BeetleQueenMonster.SummonEggs.orig_SummonEgg orig, SummonEggs self)
+    {
+      orig.Invoke(self);
+      if (!NetworkServer.active || !(bool)self.characterBody || !(bool)self.teamComponent)
+        return;
+      List<CharacterBody> characterBodyList = new List<CharacterBody>();
+      foreach (Component component1 in Physics.OverlapSphere(((Component)((EntityState)self).characterBody).gameObject.transform.position, (float)(120.0 * ((double)((Component)((EntityState)self).characterBody).gameObject.transform.localScale.x / 1.0)), (int)(LayerIndex.entityPrecise.mask)))
+      {
+        HurtBox component2 = component1.GetComponent<HurtBox>();
+        if ((bool)component2 && (bool)component2.healthComponent && (bool)component2.healthComponent.body && (bool)component2.healthComponent.body && (bool)component2.healthComponent.body.teamComponent && component2.healthComponent.body.teamComponent.teamIndex == ((EntityState)self).teamComponent.teamIndex)
+        {
+          switch (component2.healthComponent.body.baseNameToken)
+          {
+            case "BEETLEGUARD_BODY_NAME":
+            case "BEETLE_BODY_NAME":
+              if (!characterBodyList.Contains(component2.healthComponent.body))
+              {
+                characterBodyList.Add(component2.healthComponent.body);
+                break;
+              }
+              break;
+          }
+        }
+      }
+      if (characterBodyList.Count > 0)
+      {
+        for (int index = 0; index < characterBodyList.Count; ++index)
+        {
+          if (characterBodyList[index].GetBuffCount(RoR2Content.Buffs.Warbanner) <= 0)
+            characterBodyList[index].AddTimedBuff(RoR2Content.Buffs.Warbanner, 15f);
+        }
+      }
     }
   }
 }

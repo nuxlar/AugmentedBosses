@@ -1,37 +1,16 @@
-using BepInEx;
-using BepInEx.Configuration;
 using RoR2;
-using RoR2.CharacterAI;
-using RoR2.Skills;
 using RoR2.Projectile;
-using EntityStates.NullifierMonster;
+using RoR2.CharacterAI;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using System.Threading.Tasks;
+
 namespace AugmentedBosses
 {
-
-  public class AugmentedBeetleQueen
+  public class BeetleQueen
   {
-    public static GameObject beetleQueen = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Beetle/BeetleQueen2Body.prefab").WaitForCompletion();
-    public static GameObject beetleQueenMaster = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Beetle/BeetleQueenMaster.prefab").WaitForCompletion();
-
-    public void AugmentBeetleQueen()
+    private void RebuildAI()
     {
-      AugmentBeetleQueenSkills();
-      AugmentBeetleQueenAI();
-    }
-
-    private void AugmentBeetleQueenSkills()
-    {
-      SkillLocator skillLocator = beetleQueen.GetComponent<SkillLocator>();
-      skillLocator.primary.skillFamily.variants[0].skillDef.activationState = new EntityStates.SerializableEntityStateType(typeof(AugmentedChargeSpit));
-      skillLocator.secondary.skillFamily.variants[0].skillDef.activationState = new EntityStates.SerializableEntityStateType(typeof(AugmentedSpawnWards));
-      skillLocator.special.skillFamily.variants[0].skillDef.activationState = new EntityStates.SerializableEntityStateType(typeof(AugmentedSummonEggs));
-    }
-    private void AugmentBeetleQueenAI()
-    {
-      GameObject gameObject = beetleQueenMaster;
+      GameObject gameObject = AugmentedBosses.beetleQueenMaster;
       foreach (Object component in (Component[])gameObject.GetComponents<AISkillDriver>())
         Object.Destroy(component);
       AISkillDriver aiSkillDriver1 = gameObject.AddComponent<AISkillDriver>();
@@ -106,6 +85,26 @@ namespace AugmentedBosses
       aiSkillDriver4.shouldSprint = false;
       aiSkillDriver4.shouldFireEquipment = false;
       aiSkillDriver4.buttonPressType = (AISkillDriver.ButtonPressType)0;
+    }
+
+    private void ModifyBeetles()
+    {
+      CharacterBody component = AugmentedBosses.beetleBody.GetComponent<CharacterBody>();
+      component.baseMoveSpeed = 8f;
+      component.baseAttackSpeed = 1.5f;
+    }
+
+    private void ModifyProjectile()
+    {
+      ProjectileImpactExplosion component1 = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Beetle/BeetleQueenSpit.prefab").WaitForCompletion().GetComponent<ProjectileImpactExplosion>();
+      ((ProjectileExplosion)component1).blastRadius = 6f;
+      ((ProjectileExplosion)component1).childrenDamageCoefficient = 0.1f;
+      GameObject gameObject = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Beetle/BeetleQueenAcid.prefab").WaitForCompletion();
+      gameObject.transform.localScale *= 2.5f;
+      ProjectileDotZone component2 = gameObject.GetComponent<ProjectileDotZone>();
+      component2.overlapProcCoefficient = 0.5f;
+      component2.resetFrequency = 5f;
+      component2.lifetime = 20f;
     }
   }
 }
