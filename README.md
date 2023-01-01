@@ -22,23 +22,23 @@ at 25% intervals, the boss becomes frenzied and this state lasts for 15 seconds.
 - **Clay Dunestrider**
   - No Change
 
+- **Xi Construct**
+  - No Change
+
+- **Magma Worm**
+  - Increased speed, turnspeed, and meatballs
+  - Reduced turn rate and follow delay
+  - Less spins, more responsive
+
 - **Solus Control Unit**
   - Fires 2 extra lines of primary
   - Summoning is faster
   - Weaker AWU shield (a LOT weaker)
 
-- **Magma Worm**
-  - Reworks movement to something similar to RoR1
-  - Focuses players as enemies
-  - Breaths fire
-
 - **Imp Overlord**
   - Fires pattern of imp spikes
   - Increased AoE of Blitz (maybe fires random spikes outwards?)
   - Faster blink and fires explosion of spikes when arriving
-
-- **Xi Construct**
-  - No Change
 
 - **Grovetender**
   - Chains are now tracking in a channel state

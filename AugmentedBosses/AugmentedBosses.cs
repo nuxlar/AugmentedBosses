@@ -67,6 +67,9 @@ namespace AugmentedBosses
       stoneTitan.ModifyStats();
       On.EntityStates.TitanMonster.FireMegaLaser.FireBullet += FireBullet;
       On.EntityStates.TitanMonster.FireFist.PlacePredictedAttack += PlacePredictedAttack;
+      // Magma Worm
+      MagmaWorm magmaWorm = new();
+      magmaWorm.ModifyStats();
     }
 
     // keeps all enemy HP bars up constantly, mainly for vagrant but idrc anymore so its for everyone
