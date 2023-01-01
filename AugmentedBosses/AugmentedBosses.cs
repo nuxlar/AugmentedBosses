@@ -2,6 +2,7 @@ using BepInEx;
 using BepInEx.Configuration;
 using HarmonyLib;
 using EntityStates;
+using EntityStates.TitanMonster;
 using EntityStates.BeetleQueenMonster;
 using EntityStates.VagrantMonster;
 using RoR2;
@@ -61,6 +62,11 @@ namespace AugmentedBosses
       wanderingVagrant.ModifyStats();
       cannonGhost.transform.GetChild(1).GetComponent<MeshRenderer>().material = cannonRed;
       vagrant.transform.GetChild(0).GetChild(0).GetChild(3).GetComponent<SkinnedMeshRenderer>().material = cannonRed;
+      // Stone Titan
+      StoneTitan stoneTitan = new();
+      stoneTitan.ModifyStats();
+      On.EntityStates.TitanMonster.FireMegaLaser.FireBullet += FireBullet;
+      On.EntityStates.TitanMonster.FireFist.PlacePredictedAttack += PlacePredictedAttack;
     }
 
     // keeps all enemy HP bars up constantly, mainly for vagrant but idrc anymore so its for everyone
@@ -85,6 +91,61 @@ namespace AugmentedBosses
       orig(self, body);
       if (body.name == "VagrantBody(Clone)")
         body.inventory.GiveItem(RoR2Content.Items.ShockNearby);
+    }
+
+    private void PlacePredictedAttack(On.EntityStates.TitanMonster.FireFist.orig_PlacePredictedAttack orig, EntityStates.TitanMonster.FireFist self)
+    {
+      float num3 = UnityEngine.Random.Range(0.0f, 360f);
+      for (int index3 = 0; index3 < 4; ++index3)
+      {
+        int num4 = 0;
+        for (int index4 = 0; index4 < 2; ++index4)
+        {
+          Vector3 vector3 = Quaternion.Euler(0.0f, num3 + 45f * (float)index3, 0.0f) * Vector3.forward;
+          Vector3 position = self.predictedTargetPosition + vector3 * FireGoldFist.distanceBetweenFists * (float)index4;
+          float maxDistance = 60f;
+          RaycastHit hitInfo;
+          if (Physics.Raycast(new Ray(position + Vector3.up * (maxDistance / 2f), Vector3.down), out hitInfo, maxDistance, (int)LayerIndex.world.mask, QueryTriggerInteraction.Ignore))
+            position = hitInfo.point;
+          self.PlaceSingleDelayBlast(position, FireGoldFist.delayBetweenFists * (float)num4);
+          ++num4;
+        }
+      }
+    }
+
+    private void FireBullet(
+      On.EntityStates.TitanMonster.FireMegaLaser.orig_FireBullet orig,
+      EntityStates.TitanMonster.FireMegaLaser self,
+      Transform modelTransform,
+      Ray aimRay,
+      string targetMuzzle,
+      float maxDistance
+  )
+    {
+      if ((bool)(UnityEngine.Object)self.effectPrefab)
+        EffectManager.SimpleMuzzleFlash(self.effectPrefab, self.gameObject, targetMuzzle, false);
+      if (!self.isAuthority)
+        return;
+      new BulletAttack()
+      {
+        owner = self.gameObject,
+        weapon = self.gameObject,
+        origin = aimRay.origin,
+        aimVector = aimRay.direction,
+        minSpread = FireMegaLaser.minSpread,
+        maxSpread = FireMegaLaser.maxSpread,
+        bulletCount = 1U,
+        damage = ((FireMegaLaser.damageCoefficient * self.damageStat / FireMegaLaser.fireFrequency)) / 2,
+        force = FireMegaLaser.force,
+        damageType = DamageType.SlowOnHit,
+        muzzleName = targetMuzzle,
+        hitEffectPrefab = self.hitEffectPrefab,
+        isCrit = Util.CheckRoll(self.critStat, self.characterBody.master),
+        procCoefficient = FireMegaLaser.procCoefficientPerTick,
+        HitEffectNormal = false,
+        radius = 0.0f,
+        maxDistance = maxDistance
+      }.Fire();
     }
 
     private void VagrantFireBomb(On.EntityStates.VagrantMonster.FireTrackingBomb.orig_FireBomb orig, FireTrackingBomb self)

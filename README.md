@@ -1,6 +1,6 @@
 # Augmented Bosses
 
-Gives bosses a "second phase" where if their HP drops below 50% they are immune for 10 seconds and HP stays at 50% (**MAYBE**Mini boss rush at the end of each stage. Removes tricorn.)
+at 25% intervals, the boss becomes frenzied and this state lasts for 15 seconds.
 
 - **Beetle Queen**
   - Revival of Moffein's [Beetle Queen Plus](https://thunderstore.io/package/Moffein/Beetle_Queen_Plus/)
@@ -9,12 +9,15 @@ Gives bosses a "second phase" where if their HP drops below 50% they are immune 
   - More movement speed/acceleration
   - Has a tesla coil
   - Tracking Bomb is faster
+  - Doesn't stop to do abilities
   - Orbs are red now :)
   
 - **Stone Titan**
-  - Laser does 1/2 damage but it slows (mvmt AND attk spd?)
-  - Fires laser bolts during laser
-  - Tracking fist that changes pattern. Channeling ability that hits 3 times and gets more complex
+  - More movement speed/acceleration
+  - Makes model slightly bigger
+  - Laser does 1/2 damage but it slows
+  - Laser fires titan bolts while zapping
+  - Tracking fist now spawns a small fist cluster
 
 - **Clay Dunestrider**
   - No Change
