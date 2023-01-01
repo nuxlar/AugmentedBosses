@@ -47,6 +47,7 @@ namespace AugmentedBosses
 
     public void Awake()
     {
+      On.RoR2.HealthComponent.TakeDamage += TakeDamage;
       // Beetle Queen
       On.RoR2.CharacterBody.RecalculateStats += RecalculateStats;
       On.EntityStates.BeetleQueenMonster.SummonEggs.SummonEgg += SummonEgg;
@@ -83,6 +84,25 @@ namespace AugmentedBosses
     {
       orig(self);
       self.healthBarDuration = float.PositiveInfinity;
+    }
+
+    private void TakeDamage(On.RoR2.HealthComponent.orig_TakeDamage orig, RoR2.HealthComponent self, DamageInfo damageInfo)
+    {
+      float threeQuarters = self.fullHealth * 0.75f;
+      float half = self.fullHealth / 2;
+      float quarter = self.fullHealth * 0.25f;
+      float healthAfterDmg = self.health - damageInfo.damage;
+      string name = self.body.name;
+      if (name == "BeetleQueen2Body(Clone)" || name == "TitanBody(Clone)" || name == "VagrantBody(Clone)" || name == "MagmaWormBody(Clone)" || name == "ClayBossBody(Clone)" || name == "ImpBossBody(Clone)" || name == "GravekeeperBody(Clone)" || name == "GrandparentBody(Clone)" || name == "ElectricWormBody(Clone)" || name == "RoboBallBossBody(Clone)" || name == "MegaConstructBody(Clone)")
+      {
+        if ((self.health > threeQuarters && healthAfterDmg < threeQuarters) || (self.health > half && self.health < threeQuarters && healthAfterDmg < half) || (self.health > quarter && self.health < half && healthAfterDmg < quarter))
+        {
+          damageInfo.damage = damageInfo.damage / 2;
+          self.body.AddTimedBuff(RoR2Content.Buffs.ArmorBoost, 10);
+          self.body.AddTimedBuff(RoR2Content.Buffs.WarCryBuff, 10);
+        }
+      }
+      orig(self, damageInfo);
     }
 
     private void MasterChanges(CharacterMaster master)

@@ -16,7 +16,6 @@ namespace AugmentedBosses
       overlordBody.baseAcceleration = 30f;
       overlordBody.baseMoveSpeed = 18f;
       overlordBody.baseAttackSpeed = 1.25f;
-      overlordBody.levelMoveSpeed = 0.25f;
     }
   }
 }
