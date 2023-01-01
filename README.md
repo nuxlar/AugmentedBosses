@@ -1,6 +1,11 @@
 # Augmented Bosses
 
-at 25% intervals, the boss becomes frenzied and this state lasts for 15 seconds.
+at 25% intervals, the boss becomes frenzied and this state lasts for 10-15 seconds.
+
+- **No Change**
+  - Clay Dunestrider
+  - Xi Construct
+  - Scavenger
 
 - **Beetle Queen**
   - Revival of Moffein's [Beetle Queen Plus](https://thunderstore.io/package/Moffein/Beetle_Queen_Plus/)
@@ -15,15 +20,9 @@ at 25% intervals, the boss becomes frenzied and this state lasts for 15 seconds.
 - **Stone Titan**
   - More movement speed/acceleration
   - Makes model slightly bigger
-  - Laser does 1/2 damage but it slows
+  - Laser does 25% less damage but it slows
   - Laser fires titan bolts while zapping
   - Tracking fist now spawns a small fist cluster
-
-- **Clay Dunestrider**
-  - No Change
-
-- **Xi Construct**
-  - No Change
 
 - **Magma Worm**
   - Increased speed, turnspeed, and meatballs
@@ -53,9 +52,6 @@ at 25% intervals, the boss becomes frenzied and this state lasts for 15 seconds.
   - Reworks movement to something similar to RoR1
   - Focuses players as enemies
   - Breaths lightning
-
-- **Scavenger**
-  - No Change
 
 ## Changelog
 
