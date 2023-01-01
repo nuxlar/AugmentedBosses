@@ -1,17 +1,23 @@
 # Augmented Bosses
 
-at 25% intervals, the boss becomes frenzied and this state lasts for 10-15 seconds.
+**WORK IN PROGRESS**
 
-- **No Change**
+*Icon is from AlgeButter on ArtStation*
+
+Tweaks bosses to be more of a threat (Not all bosses are tweaked yet). Enemy HP bars constantly show (so you can tell when Vagrant's tesla is up). Bosses becomes frenzied (+Armor +AtkSpd +MoveSpd) at 25% HP intervals (75%, 50%, 25%) and this state lasts for 10 seconds. Makes the bosses less of a 1-shot for more burst type survivors.
+
+- **No Changes Planned**
   - Clay Dunestrider
   - Xi Construct
   - Scavenger
+  - Devastator
 
 - **Beetle Queen**
   - Revival of Moffein's [Beetle Queen Plus](https://thunderstore.io/package/Moffein/Beetle_Queen_Plus/)
 
 - **Wandering Vagrant**
   - More movement speed/acceleration
+  - Reduced damage
   - Has a tesla coil
   - Tracking Bomb is faster
   - Doesn't stop to do abilities
@@ -29,32 +35,25 @@ at 25% intervals, the boss becomes frenzied and this state lasts for 10-15 secon
   - Reduced turn rate and follow delay
   - Less spins, more responsive
 
-- **Solus Control Unit**
-  - Fires 2 extra lines of primary
-  - Summoning is faster
-  - Weaker AWU shield (a LOT weaker)
-
 - **Imp Overlord**
-  - Fires pattern of imp spikes
-  - Increased AoE of Blitz (maybe fires random spikes outwards?)
-  - Faster blink and fires explosion of spikes when arriving
+  - Fires X pattern of imp spikes on top of current fan
+  - Increased move/atk speed
+  - Faster blink
+
+- **Solus Control Unit**
+  - TBD
 
 - **Grovetender**
-  - Chains are now tracking in a channel state
-  - Wisp Barrage spawns more and has faster wisps
+  - TBD
 
 - **Grandparent**
-  - Revives 1 or all abilities: PortalFist, SpiritPull, PortalJump
-  - Removes boulder throw
-  - Maybe enhances grav orb to stack burn and nerfs pull
+  - TBD
 
 - **Overloading Worm**
-  - Reworks movement to something similar to RoR1
-  - Focuses players as enemies
-  - Breaths lightning
+  - Probably same as magma worm
 
 ## Changelog
 
-**1.0.0**
+**0.5.0**
 
-- something
+- Beta, I think idk the terms

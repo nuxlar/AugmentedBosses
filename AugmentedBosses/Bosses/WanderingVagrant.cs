@@ -17,7 +17,7 @@ namespace AugmentedBosses
       vagrantBody.baseAcceleration = 20f;
       vagrantBody.baseMoveSpeed = 8f;
       vagrantBody.baseAttackSpeed = 1.25f;
-      vagrantBody.baseDamage = 5;
+      vagrantBody.baseDamage = 4;
     }
   }
 }

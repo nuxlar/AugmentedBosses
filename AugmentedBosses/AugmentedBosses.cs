@@ -22,7 +22,7 @@ using System.Threading.Tasks;
 
 namespace AugmentedBosses
 {
-  [BepInPlugin("com.Nuxlar.AugmentedBosses", "AugmentedBosses", "1.0.0")]
+  [BepInPlugin("com.Nuxlar.AugmentedBosses", "AugmentedBosses", "0.5.0")]
 
   public class AugmentedBosses : BaseUnityPlugin
   {

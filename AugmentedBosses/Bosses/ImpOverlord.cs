@@ -14,7 +14,6 @@ namespace AugmentedBosses
     {
       CharacterBody overlordBody = AugmentedBosses.impBoss.GetComponent<CharacterBody>();
       overlordBody.baseAcceleration = 30f;
-      overlordBody.baseMoveSpeed = 18f;
       overlordBody.baseAttackSpeed = 1.25f;
     }
   }
