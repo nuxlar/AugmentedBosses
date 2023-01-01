@@ -10,11 +10,15 @@ namespace AugmentedBosses
   {
     // Accel 15
     // Base Move speed 6
+    // Level Move Speed 0
     public void ModifyStats()
     {
       CharacterBody vagrantBody = AugmentedBosses.vagrant.GetComponent<CharacterBody>();
-      vagrantBody.acceleration = 500;
-      vagrantBody.moveSpeed = 14;
+      vagrantBody.baseAcceleration = 20f;
+      vagrantBody.baseMoveSpeed = 8f;
+      vagrantBody.baseAttackSpeed = 1.25f;
+      vagrantBody.baseDamage = 5;
+      vagrantBody.levelMoveSpeed = 0.25f;
     }
   }
 }

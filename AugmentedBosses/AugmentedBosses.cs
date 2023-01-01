@@ -1,9 +1,11 @@
 using BepInEx;
 using BepInEx.Configuration;
+using HarmonyLib;
 using EntityStates;
 using EntityStates.BeetleQueenMonster;
 using EntityStates.VagrantMonster;
 using RoR2;
+using RoR2.UI;
 using RoR2.CharacterAI;
 using RoR2.Skills;
 using RoR2.Projectile;
@@ -52,16 +54,30 @@ namespace AugmentedBosses
       beetleQueen.ModifyProjectile();
       // Wandering Vagrant
       CharacterMaster.onStartGlobal += MasterChanges;
+      On.RoR2.UI.CombatHealthBarViewer.Awake += HealthbarAwake;
       On.RoR2.CharacterMaster.OnBodyStart += OnBodyStart;
       On.EntityStates.VagrantMonster.FireTrackingBomb.FireBomb += VagrantFireBomb;
-      new WanderingVagrant().ModifyStats();
+      WanderingVagrant wanderingVagrant = new();
+      wanderingVagrant.ModifyStats();
       cannonGhost.transform.GetChild(1).GetComponent<MeshRenderer>().material = cannonRed;
+      vagrant.transform.GetChild(0).GetChild(0).GetChild(3).GetComponent<SkinnedMeshRenderer>().material = cannonRed;
+    }
+
+    // keeps all enemy HP bars up constantly, mainly for vagrant but idrc anymore so its for everyone
+    private void HealthbarAwake(On.RoR2.UI.CombatHealthBarViewer.orig_Awake orig, RoR2.UI.CombatHealthBarViewer self)
+    {
+      orig(self);
+      self.healthBarDuration = float.PositiveInfinity;
     }
 
     private void MasterChanges(CharacterMaster master)
     {
       if (master.name == "VagrantMaster(Clone)")
+      {
         master.GetComponent<CharacterMaster>().GetComponents<AISkillDriver>().Where<AISkillDriver>(x => x.customName == "Chase").First<AISkillDriver>().minDistance = 25f;
+        master.GetComponent<CharacterMaster>().GetComponents<AISkillDriver>().Where<AISkillDriver>(x => x.customName == "TrackingBomb").First<AISkillDriver>().movementType = AISkillDriver.MovementType.ChaseMoveTarget;
+        master.GetComponent<CharacterMaster>().GetComponents<AISkillDriver>().Where<AISkillDriver>(x => x.customName == "Barrage").First<AISkillDriver>().movementType = AISkillDriver.MovementType.ChaseMoveTarget;
+      }
     }
 
     private void OnBodyStart(On.RoR2.CharacterMaster.orig_OnBodyStart orig, RoR2.CharacterMaster self, CharacterBody body)
@@ -89,13 +105,13 @@ namespace AugmentedBosses
 
     private void RecalculateStats(On.RoR2.CharacterBody.orig_RecalculateStats orig, CharacterBody self)
     {
-      orig.Invoke(self);
+      orig(self);
       self.armor -= 5f * (float)self.GetBuffCount(RoR2Content.Buffs.BeetleJuice);
     }
 
     private void SummonEgg(On.EntityStates.BeetleQueenMonster.SummonEggs.orig_SummonEgg orig, SummonEggs self)
     {
-      orig.Invoke(self);
+      orig(self);
       if (!NetworkServer.active || !(bool)self.characterBody || !(bool)self.teamComponent)
         return;
       List<CharacterBody> characterBodyList = new List<CharacterBody>();
