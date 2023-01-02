@@ -4,7 +4,13 @@
 
 *Icon is from AlgeButter on ArtStation*
 
-Tweaks bosses to be more of a threat (Not all bosses are tweaked yet). Enemy HP bars constantly show (so you can tell when Vagrant's tesla is up). Bosses becomes frenzied (+Armor +AtkSpd +MoveSpd) at 25% HP intervals (75%, 50%, 25%) and this state lasts for 10 seconds. Makes the bosses less of a 1-shot for more burst type survivors.
+Tweaks bosses to be more of a threat (Not all bosses are tweaked yet). 
+
+Vagrant HP bars are always visible (after attacking once) so you can see when the coil is up. 
+
+Bosses becomes frenzied (+Armor +AtkSpd +MoveSpd) at 50% HP and this state lasts for 10 seconds.
+
+The instance of damage that would reduce HP below certain intervals (75%, 50%, 25%) is reduced by half making bosses more resistant to burst survivors. 
 
 - **No Changes Planned**
   - Clay Dunestrider
@@ -53,6 +59,13 @@ Tweaks bosses to be more of a threat (Not all bosses are tweaked yet). Enemy HP 
   - Probably same as magma worm
 
 ## Changelog
+
+**0.5.1**
+
+- Reduces frenzy thresholds from 3 to 1, occurs only at the 50% HP threshold
+- Code organization
+- Removes persistant HP for all enemies now it's only for vagrants (Cheers 6thMoon)
+- README Edit
 
 **0.5.0**
 

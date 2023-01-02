@@ -1,16 +1,33 @@
 using RoR2;
 using RoR2.Projectile;
 using RoR2.CharacterAI;
+using EntityStates;
+using EntityStates.BeetleQueenMonster;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.AddressableAssets;
+using System.Collections.Generic;
 
 namespace AugmentedBosses
 {
   public class BeetleQueen
   {
-    public void ModifyAI()
+
+    private static GameObject beetleBody = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Beetle/BeetleBody.prefab").WaitForCompletion();
+    private static GameObject beetleQueen = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Beetle/BeetleQueen2Body.prefab").WaitForCompletion();
+    private static GameObject beetleQueenMaster = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Beetle/BeetleQueenMaster.prefab").WaitForCompletion();
+
+    public BeetleQueen()
     {
-      GameObject gameObject = AugmentedBosses.beetleQueenMaster;
+      ModifyAI();
+      ModifyBeetles();
+      ModifyProjectile();
+      On.EntityStates.BeetleQueenMonster.SummonEggs.SummonEgg += SummonEgg;
+    }
+
+    private void ModifyAI()
+    {
+      GameObject gameObject = beetleQueenMaster;
       foreach (Object component in (Component[])gameObject.GetComponents<AISkillDriver>())
         Object.Destroy(component);
       AISkillDriver aiSkillDriver1 = gameObject.AddComponent<AISkillDriver>();
@@ -87,14 +104,14 @@ namespace AugmentedBosses
       aiSkillDriver4.buttonPressType = (AISkillDriver.ButtonPressType)0;
     }
 
-    public void ModifyBeetles()
+    private void ModifyBeetles()
     {
-      CharacterBody component = AugmentedBosses.beetleBody.GetComponent<CharacterBody>();
+      CharacterBody component = beetleBody.GetComponent<CharacterBody>();
       component.baseMoveSpeed = 8f;
       component.baseAttackSpeed = 1.5f;
     }
 
-    public void ModifyProjectile()
+    private void ModifyProjectile()
     {
       ProjectileImpactExplosion component1 = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Beetle/BeetleQueenSpit.prefab").WaitForCompletion().GetComponent<ProjectileImpactExplosion>();
       ((ProjectileExplosion)component1).blastRadius = 6f;
@@ -106,5 +123,40 @@ namespace AugmentedBosses
       component2.resetFrequency = 5f;
       component2.lifetime = 20f;
     }
+
+    private void SummonEgg(On.EntityStates.BeetleQueenMonster.SummonEggs.orig_SummonEgg orig, SummonEggs self)
+    {
+      orig(self);
+      if (!NetworkServer.active || !(bool)self.characterBody || !(bool)self.teamComponent)
+        return;
+      List<CharacterBody> characterBodyList = new List<CharacterBody>();
+      foreach (Component component1 in Physics.OverlapSphere(((Component)((EntityState)self).characterBody).gameObject.transform.position, (float)(120.0 * ((double)((Component)((EntityState)self).characterBody).gameObject.transform.localScale.x / 1.0)), (int)(LayerIndex.entityPrecise.mask)))
+      {
+        HurtBox component2 = component1.GetComponent<HurtBox>();
+        if ((bool)component2 && (bool)component2.healthComponent && (bool)component2.healthComponent.body && (bool)component2.healthComponent.body && (bool)component2.healthComponent.body.teamComponent && component2.healthComponent.body.teamComponent.teamIndex == ((EntityState)self).teamComponent.teamIndex)
+        {
+          switch (component2.healthComponent.body.baseNameToken)
+          {
+            case "BEETLEGUARD_BODY_NAME":
+            case "BEETLE_BODY_NAME":
+              if (!characterBodyList.Contains(component2.healthComponent.body))
+              {
+                characterBodyList.Add(component2.healthComponent.body);
+                break;
+              }
+              break;
+          }
+        }
+      }
+      if (characterBodyList.Count > 0)
+      {
+        for (int index = 0; index < characterBodyList.Count; ++index)
+        {
+          if (characterBodyList[index].GetBuffCount(RoR2Content.Buffs.Warbanner) <= 0)
+            characterBodyList[index].AddTimedBuff(RoR2Content.Buffs.Warbanner, 15f);
+        }
+      }
+    }
+
   }
 }
