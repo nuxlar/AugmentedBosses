@@ -47,7 +47,9 @@ The instance of damage that would reduce HP below certain intervals (75%, 50%, 2
   - Faster blink
 
 - **Solus Control Unit**
-  - TBD
+  - Welcome to the lightshow - replaced solus spawn with targeted lasers
+  - Ult is now triple like AWU
+  - Ult gives a 5 second armor boost
 
 - **Grovetender**
   - TBD

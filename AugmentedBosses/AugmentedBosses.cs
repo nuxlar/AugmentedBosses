@@ -14,7 +14,7 @@ namespace AugmentedBosses
     public static GameObject dunestrider = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/ClayBoss/ClayBossBody.prefab").WaitForCompletion();
     public static GameObject impBoss = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/ImpBoss/ImpBossBody.prefab").WaitForCompletion();
     public static GameObject grovetender = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Gravekeeper/GravekeeperBody.prefab").WaitForCompletion();
-    public static GameObject solusControlUnit = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/RoboBallBoss/RoboBallBossBody.prefab").WaitForCompletion();
+
     public static GameObject xiConstruct = Addressables.LoadAssetAsync<GameObject>("RoR2/DLC1/MajorAndMinorConstruct/MegaConstructBody.prefab").WaitForCompletion();
     public static GameObject grandparent = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Grandparent/GrandParentBody.prefab").WaitForCompletion();
     public static GameObject overloadingWorm = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/ElectricWorm/ElectricWormBody.prefab").WaitForCompletion();
@@ -35,6 +35,7 @@ namespace AugmentedBosses
       new StoneTitan();
       new MagmaWorm();
       new ImpOverlord();
+      new SolusControlUnit();
     }
 
     private void HandleDamage(On.RoR2.UI.CombatHealthBarViewer.orig_HandleDamage orig, RoR2.UI.CombatHealthBarViewer self, HealthComponent victimHealthComponent, TeamIndex victimTeam)
