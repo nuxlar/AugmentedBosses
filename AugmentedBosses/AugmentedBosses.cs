@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace AugmentedBosses
 {
-  [BepInPlugin("com.Nuxlar.AugmentedBosses", "AugmentedBosses", "0.5.1")]
+  [BepInPlugin("com.Nuxlar.AugmentedBosses", "AugmentedBosses", "0.6.0")]
 
   public class AugmentedBosses : BaseUnityPlugin
   {

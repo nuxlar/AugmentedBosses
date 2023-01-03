@@ -62,6 +62,10 @@ The instance of damage that would reduce HP below certain intervals (75%, 50%, 2
 
 ## Changelog
 
+**0.6.0**
+
+- Tweaks Solus Control Unit
+
 **0.5.1**
 
 - Reduces frenzy thresholds from 3 to 1, occurs only at the 50% HP threshold

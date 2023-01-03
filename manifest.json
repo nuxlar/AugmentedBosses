@@ -1,6 +1,6 @@
 ﻿{
 	"name": "AugmentedBosses",
-	"version_number": "0.5.1",
+	"version_number": "0.6.0",
 	"website_url": "",
 	"description": "Buffs Bosses to feel more like bosses. WORK IN PROGRESS",
 	"dependencies": [
