@@ -6,9 +6,7 @@
 
 Tweaks bosses to be more of a threat (Not all bosses are tweaked yet). 
 
-Vagrant HP bars are always visible (after attacking once) so you can see when the coil is up. 
-
-Bosses becomes frenzied (+Armor +AtkSpd +MoveSpd) at 50% HP and this state lasts for 10 seconds.
+Bosses becomes frenzied (+Armor +AtkSpd +MoveSpd) at 75% & 50% HP and this state lasts for 10 seconds.
 
 The instance of damage that would reduce HP below certain intervals (75%, 50%, 25%) is reduced by half making bosses more resistant to burst survivors. 
 
@@ -23,8 +21,6 @@ The instance of damage that would reduce HP below certain intervals (75%, 50%, 2
 
 - **Wandering Vagrant**
   - More movement speed/acceleration
-  - Reduced damage
-  - Has a tesla coil
   - Tracking Bomb is faster
   - Doesn't stop to do abilities
   - Orbs are red now :)
@@ -40,6 +36,9 @@ The instance of damage that would reduce HP below certain intervals (75%, 50%, 2
   - Increased speed, turnspeed, and meatballs
   - Reduced turn rate and follow delay
   - Less spins, more responsive
+
+- **Overloading Worm**
+  - Same as Magma
 
 - **Imp Overlord**
   - Fires X pattern of imp spikes on top of current fan
@@ -57,10 +56,13 @@ The instance of damage that would reduce HP below certain intervals (75%, 50%, 2
 - **Grandparent**
   - TBD
 
-- **Overloading Worm**
-  - Probably same as magma worm
-
 ## Changelog
+
+**0.7.0**
+
+- Tweaks Overloading Worm
+- Re-adds 75% frenzy threshold (2 total, 75% & 50%)
+- Tweaks Vagrant (Removes Tesla, Increases Dmg)
 
 **0.6.0**
 

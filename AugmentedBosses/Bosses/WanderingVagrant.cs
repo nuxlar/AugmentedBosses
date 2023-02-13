@@ -23,7 +23,6 @@ namespace AugmentedBosses
       vagrantBody.baseAcceleration = 20f; // Vanilla 15
       vagrantBody.baseMoveSpeed = 8f; // Vanilla 6
       vagrantBody.baseAttackSpeed = 1.25f;
-      vagrantBody.baseDamage = 4;
     }
   }
 }

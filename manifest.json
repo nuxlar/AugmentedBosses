@@ -1,8 +1,8 @@
 ﻿{
 	"name": "AugmentedBosses",
-	"version_number": "0.6.0",
+	"version_number": "0.7.0",
 	"website_url": "",
-	"description": "Buffs Bosses to feel more like bosses. WORK IN PROGRESS",
+	"description": "Tweaks bosses to be more interesting. WIP",
 	"dependencies": [
 		"bbepis-BepInExPack-5.4.2102",
 		"RiskofThunder-HookGenPatcher-1.2.3"
